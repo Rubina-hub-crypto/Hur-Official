@@ -1,1 +1,1 @@
-# Hur-Official
+# HUR Official — Crafted in Armenia 🇦🇲
