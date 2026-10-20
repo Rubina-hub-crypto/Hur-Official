@@ -1,7 +1,270 @@
 
-/* HUR — CSS-only responsive mega menu */
 
-.menu-toggle {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f5f0">
+<meta name="description" content="Discover HUR Official — timeless silver accessories, considered design and modern elegance.">
+<title>HUR Official — Timeless Silver</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --ivory: #f7f5f0;
+  --paper: #fffefa;
+  --ink: #20201d;
+  --muted: #77766f;
+  --silver: #a9aaa7;
+  --line: #dedbd3;
+  --gold: #ad9875;
+  --serif: "Cormorant Garamond", Georgia, serif;
+  --sans: "Inter", Arial, sans-serif;
+  --page: 1240px;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--ivory);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+a { color: inherit; text-decoration: none; }
+a:focus-visible, label:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 5px;
+}
+
+img, svg { max-width: 100%; }
+button, input { font: inherit; }
+
+.container {
+  width: min(var(--page), 90%);
+  margin-inline: auto;
+}
+
+.eyebrow {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.section {
+  padding: 105px 0;
+}
+
+.section-heading {
+  max-width: 650px;
+  margin: 0 auto 45px;
+  text-align: center;
+}
+
+.section-heading h2 {
+  margin: 10px 0;
+  font: 500 clamp(40px, 5vw, 65px)/1.05 var(--serif);
+}
+
+.section-heading p {
+  color: var(--muted);
+}
+
+/* NAVIGATION */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 82px;
+  padding: 0 5%;
+  background: rgba(247,245,240,.96);
+  border-bottom: 1px solid rgba(32,32,29,.1);
+  backdrop-filter: blur(16px);
+}
+
+.logo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.logo-mark {
+  display: grid;
+  width: 43px;
+  height: 43px;
+  place-items: center;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  font: 600 15px var(--serif);
+  letter-spacing: .08em;
+}
+
+.logo-text {
+  font: 600 24px var(--serif);
+  letter-spacing: .22em;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-menu > li { position: relative; }
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 82px;
+  font-size: 10px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  transition: color .25s;
+}
+
+.nav-link:hover,
+.nav-link:focus-visible { color: var(--gold); }
+
+.arrow {
+  display: inline-block;
+  font-size: 12px;
+  transition: transform .25s;
+}
+
+.has-mega:hover > .nav-link .arrow,
+.has-mega:focus-within > .nav-link .arrow {
+  transform: rotate(180deg);
+}
+
+.nav-cta > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 19px;
+  background: var(--ink);
+  color: white;
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  transition: background .25s;
+}
+
+.nav-cta > a:hover { background: #82735c; }
+
+/* DESKTOP MEGA MENU */
+
+.mega-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr;
+  gap: 35px;
+  width: min(820px, 90vw);
+  padding: 36px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  box-shadow: 0 25px 55px rgba(32,32,29,.12);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, 12px);
+  transition: opacity .25s, transform .25s, visibility .25s;
+}
+
+.has-mega:hover > .mega-menu,
+.has-mega:focus-within > .mega-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+
+.mega-column h3 {
+  margin: 0 0 18px;
+  font: 500 25px var(--serif);
+}
+
+.mega-column ul {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mega-column ul a {
+  color: var(--muted);
+  font-size: 12px;
+  transition: color .2s, padding .2s;
+}
+
+.mega-column ul a:hover {
+  color: var(--ink);
+  padding-left: 5px;
+}
+
+.mega-feature {
+  min-height: 185px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 24px;
+  background: #efede7;
+}
+
+.mega-feature .eyebrow { color: #88775d; }
+
+.mega-feature h3 {
+  margin: 9px 0;
+  font: 500 30px/1.05 var(--serif);
+}
+
+.mega-feature p {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--gold);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+/* CSS-ONLY MOBILE CONTROLS */
+
+.menu-toggle,
+.submenu-toggle { 
   position: absolute;
   width: 1px;
   height: 1px;
@@ -10,204 +273,752 @@
   white-space: nowrap;
 }
 
-.menu-toggle-label {
-  display: none;
-  width: 42px;
-  height: 42px;
-  flex-shrink: 0;
+.menu-toggle-label,
+.nav-backdrop,
+.submenu-label { display: none; }
+
+/* HERO */
+
+.hero {
+  position: relative;
+  display: grid;
+  min-height: 680px;
+  place-items: center;
+  overflow: hidden;
+  padding: 100px 5%;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(255,255,255,.95), transparent 45%),
+    radial-gradient(ellipse at 85% 75%, rgba(193,190,181,.35), transparent 40%),
+    linear-gradient(135deg, #f5f3ed, #e9e7e0 50%, #faf9f5);
+}
+
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border: 1px solid rgba(173,152,117,.25);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero::before {
+  top: 8%;
+  left: -150px;
+}
+
+.hero::after {
+  right: -130px;
+  bottom: 2%;
+  width: 420px;
+  height: 420px;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 850px;
+  animation: rise .8s ease-out both;
+}
+
+.hero-badge {
+  display: inline-block;
+  padding: 8px 17px;
+  border: 1px solid rgba(173,152,117,.6);
+  border-radius: 30px;
+  color: #7f7058;
+  font-size: 9px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin: 30px 0 22px;
+  font: 400 clamp(60px, 10vw, 116px)/.91 var(--serif);
+  letter-spacing: -.045em;
+}
+
+.hero h1 span {
+  display: block;
+  color: #888780;
+  font-style: italic;
+}
+
+.hero p {
+  max-width: 520px;
+  margin: 0 auto 32px;
+  color: #696860;
+  font-size: 13px;
+}
+
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.button {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  z-index: 1003;
+  min-height: 48px;
+  padding: 0 24px;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: white;
+  font-size: 10px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  transition: background .25s, color .25s;
 }
 
-.menu-toggle-label span,
-.menu-toggle-label span::before,
-.menu-toggle-label span::after {
-  position: absolute;
-  display: block;
-  width: 25px;
-  height: 1.5px;
-  background: var(--hur-ink);
-  transition: transform .25s ease, top .25s ease;
+.button:hover {
+  background: var(--gold);
+  border-color: var(--gold);
 }
 
-.menu-toggle-label span {
+.button-outline {
+  background: transparent;
+  color: var(--ink);
+}
+
+.button-outline:hover { color: white; }
+
+/* COLLECTION */
+
+.collection { background: var(--paper); }
+
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 22px;
+}
+
+.collection-card {
   position: relative;
+  display: flex;
+  min-height: 340px;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 28px;
+  overflow: hidden;
+  background: linear-gradient(145deg,#f0eee8,#d9d7d0);
+  isolation: isolate;
 }
 
-.menu-toggle-label span::before,
-.menu-toggle-label span::after {
+.collection-card:nth-child(2) {
+  background: linear-gradient(145deg,#e6e3dc,#f7f5f0);
+}
+
+.collection-card:nth-child(3) {
+  background: linear-gradient(145deg,#d7d6d0,#eeece6);
+}
+
+.collection-card::before {
   content: "";
-  left: 0;
+  position: absolute;
+  z-index: -1;
+  width: 230px;
+  height: 230px;
+  top: 18%;
+  left: 50%;
+  border: 1px solid rgba(125,124,117,.45);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 0 18px rgba(255,255,255,.12),
+              0 0 0 38px rgba(255,255,255,.1);
+  transition: transform .5s;
 }
 
-.menu-toggle-label span::before {
-  top: -7px;
+.collection-card:hover::before {
+  transform: translateX(-50%) rotate(20deg) scale(1.07);
 }
 
-.menu-toggle-label span::after {
-  top: 7px;
+.collection-card h3 {
+  margin: 0;
+  font: 500 35px var(--serif);
 }
 
-.nav-backdrop {
-  display: none;
+.collection-card p {
+  margin: 3px 0 16px;
+  color: #62615a;
+  font-size: 11px;
 }
 
-@media (max-width: 1020px) {
-  .menu-toggle-label {
-    display: flex;
+/* FEATURES */
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 30px;
+}
+
+.feature {
+  padding: 30px 25px;
+  border-top: 1px solid var(--line);
+  transition: border-color .25s, transform .25s;
+}
+
+.feature:hover {
+  border-color: var(--gold);
+  transform: translateY(-4px);
+}
+
+.feature-number {
+  color: var(--gold);
+  font: 400 35px var(--serif);
+}
+
+.feature h3 {
+  margin: 10px 0;
+  font: 500 27px var(--serif);
+}
+
+.feature p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* ABOUT */
+
+.about { background: #eeece6; }
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 9%;
+}
+
+.about-art {
+  position: relative;
+  display: grid;
+  min-height: 410px;
+  place-items: center;
+  overflow: hidden;
+  background: linear-gradient(145deg,#e3e1da,#f8f6f0);
+}
+
+.about-art::before,
+.about-art::after {
+  content: "";
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  border: 1px solid #aaa79f;
+  border-radius: 50%;
+}
+
+.about-art::after {
+  width: 175px;
+  height: 175px;
+}
+
+.about-monogram {
+  color: #7d7a72;
+  font: 400 75px var(--serif);
+  letter-spacing: .12em;
+}
+
+.about-copy h2 {
+  margin: 12px 0 22px;
+  font: 500 clamp(42px,5vw,67px)/1 var(--serif);
+}
+
+.about-copy p {
+  color: #68675f;
+  font-size: 13px;
+}
+
+/* CONTACT */
+
+.contact {
+  text-align: center;
+  background: var(--paper);
+}
+
+.contact h2 {
+  margin: 12px 0;
+  font: 500 clamp(45px,7vw,76px)/1 var(--serif);
+}
+
+.contact p {
+  max-width: 480px;
+  margin: 20px auto 30px;
+  color: var(--muted);
+}
+
+.footer {
+  padding: 35px 5%;
+  background: #20201d;
+  color: #f7f5f0;
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.footer-brand {
+  font: 500 26px var(--serif);
+  letter-spacing: .2em;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+}
+
+.footer-links a {
+  color: #d2cfc6;
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.footer-links a:hover { color: white; }
+
+.footer-bottom {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #44433e;
+  color: #aaa89f;
+  font-size: 10px;
+}
+
+/* ANIMATION */
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
   }
+}
+
+/* TABLET AND MOBILE */
+
+@media (max-width: 900px) {
+  .navbar { min-height: 74px; }
+  .menu-toggle-label {
+    display: block;
+    position: relative;
+    z-index: 103;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+  }
+
+  .menu-toggle-label span,
+  .menu-toggle-label span::before,
+  .menu-toggle-label span::after {
+    position: absolute;
+    left: 5px;
+    width: 25px;
+    height: 1px;
+    background: var(--ink);
+    transition: transform .25s, top .25s;
+  }
+
+  .menu-toggle-label span { top: 17px; }
+  .menu-toggle-label span::before,
+  .menu-toggle-label span::after {
+    content: "";
+    left: 0;
+  }
+  .menu-toggle-label span::before { top: -7px; }
+  .menu-toggle-label span::after { top: 7px; }
 
   .nav-menu {
     position: fixed;
+    z-index: 102;
     top: 0;
     right: 0;
-    bottom: 0;
-    z-index: 1002;
     display: flex;
-    width: min(440px, 90vw);
-    height: 100vh;
+    width: min(420px, 88vw);
     height: 100dvh;
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
     gap: 0;
+    padding: 85px 25px 35px;
     overflow-y: auto;
-    padding: 100px 25px 40px;
-    background: var(--hur-paper);
-    box-shadow: -20px 0 50px rgba(32, 31, 28, .1);
-    transform: translateX(105%);
+    background: var(--paper);
+    box-shadow: -15px 0 40px rgba(0,0,0,.08);
+    transform: translateX(110%);
     visibility: hidden;
-    transition: transform .35s ease, visibility .35s ease;
+    transition: transform .3s, visibility .3s;
   }
 
-  #menu-toggle:checked ~ .nav-menu {
+  .nav-menu > li { border-bottom: 1px solid var(--line); }
+
+  .nav-link {
+    width: 100%;
+    min-height: 58px;
+    justify-content: space-between;
+  }
+
+  .nav-cta { padding-top: 20px; border: 0 !important; }
+  .nav-cta > a { justify-content: center; width: 100%; }
+
+  .menu-toggle:checked ~ .nav-menu {
     transform: translateX(0);
     visibility: visible;
   }
 
-  #menu-toggle:checked ~ .menu-toggle-label span {
+  .nav-backdrop {
+    position: fixed;
+    z-index: 101;
+    inset: 0;
+    background: rgba(25,24,21,.42);
+  }
+
+  .menu-toggle:checked ~ .nav-backdrop { display: block; }
+
+  .menu-toggle:checked + .menu-toggle-label span {
     background: transparent;
   }
 
-  #menu-toggle:checked ~ .menu-toggle-label span::before {
+  .menu-toggle:checked + .menu-toggle-label span::before {
     top: 0;
     transform: rotate(45deg);
   }
 
-  #menu-toggle:checked ~ .menu-toggle-label span::after {
+  .menu-toggle:checked + .menu-toggle-label span::after {
     top: 0;
     transform: rotate(-45deg);
   }
 
-  .nav-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 1001;
-    display: block;
-    background: rgba(25, 24, 22, .42);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity .3s ease, visibility .3s ease;
-  }
-
-  #menu-toggle:checked ~ .nav-backdrop {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .nav-menu > li {
-    position: relative;
-    width: 100%;
-    border-bottom: 1px solid var(--hur-silver);
-  }
-
-  .nav-menu > li > a {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    padding: 19px 2px;
-    font-size: 11px;
-  }
-
   .mega-menu {
     position: static;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0 18px;
-    max-height: 0;
-    overflow: hidden;
-    padding: 0;
+    display: none;
+    width: 100%;
+    padding: 20px 15px;
+    grid-template-columns: 1fr;
+    gap: 25px;
     border: 0;
+    border-top: 1px solid var(--line);
     box-shadow: none;
-    background: transparent;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transform: none;
-    transition: opacity .25s ease;
-  }
-
-  .nav-menu > li.has-mega:focus-within > .mega-menu {
-    max-height: 1200px;
-    padding: 8px 0 24px;
+    background: #f8f6f1;
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
+    transform: none;
   }
 
-  .mega-menu-col {
-    padding-top: 18px;
+  .has-mega:hover > .mega-menu,
+  .has-mega:focus-within > .mega-menu {
+    transform: none;
   }
 
-  .mega-menu-col h4 {
-    font-size: 21px;
-    margin-bottom: 12px;
+  .has-mega:hover > .mega-menu { display: none; }
+
+  .submenu-label {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 45px;
+    height: 58px;
+    cursor: pointer;
   }
 
-  .mega-menu-col ul {
-    gap: 10px;
+  .submenu-label::after {
+    content: "+";
+    position: absolute;
+    top: 14px;
+    right: 10px;
+    font-size: 20px;
+    color: var(--gold);
   }
 
-  .mega-menu-col ul a {
-    font-size: 11px;
-  }
+  .submenu-toggle:checked ~ .mega-menu { display: grid; }
+  .submenu-toggle:checked + .submenu-label::after { content: "−"; }
 
-  .mega-menu-col.featured {
-    grid-column: 1 / -1;
-    min-height: 210px;
-    margin-top: 20px;
-  }
-
-  .nav-cta {
-    margin-top: 20px;
-    border-bottom: 0 !important;
-  }
-
-  .nav-cta a {
-    width: 100%;
-  }
+  .about-grid { gap: 35px; }
 }
 
-@media (max-width: 480px) {
-  .navbar .logo-svg {
-    width: 36px;
-    height: 36px;
+@media (max-width: 650px) {
+  .section { padding: 75px 0; }
+  .hero { min-height: 600px; padding: 80px 6%; }
+  .hero h1 { font-size: clamp(58px, 15vw, 84px); }
+  .collection-grid, .features-grid, .about-grid {
+    grid-template-columns: 1fr;
   }
-
-  .navbar .logo-text {
-    font-size: 24px;
-    letter-spacing: 3px;
-  }
-
-  .nav-menu {
-    padding-right: 20px;
-    padding-left: 20px;
-  }
-
-  .mega-menu-col.featured {
-    min-height: 200px;
-  }
+  .collection-card { min-height: 300px; }
+  .about-art { min-height: 300px; }
+  .about-copy { padding-top: 5px; }
+  .section-heading { margin-bottom: 30px; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+  .footer-links { gap: 15px; }
 }
 
+</style>
+</head>
+
+<body id="top">
+
+<header class="navbar">
+  <a class="logo-link" href="#top" aria-label="HUR Official home">
+    <span class="logo-mark">HUR</span>
+    <span class="logo-text">HUR</span>
+  </a>
+
+  <input class="menu-toggle" type="checkbox" id="menu-toggle" aria-label="Toggle navigation">
+  <label class="menu-toggle-label" for="menu-toggle" aria-label="Open or close menu">
+    <span></span>
+  </label>
+  <label class="nav-backdrop" for="menu-toggle" aria-label="Close menu"></label>
+
+  <ul class="nav-menu">
+    <li class="has-mega">
+      <a class="nav-link" href="#collection">
+        Collection <span class="arrow">⌄</span>
+      </a>
+      <input class="submenu-toggle" type="checkbox" id="collection-menu">
+      <label class="submenu-label" for="collection-menu" aria-label="Toggle collection submenu"></label>
+      <div class="mega-menu">
+        <div class="mega-column">
+          <h3>Shop HUR</h3>
+          <ul>
+            <li><a href="#collection">All Collections</a></li>
+            <li><a href="#collection">Signature Pieces</a></li>
+            <li><a href="#collection">Everyday Silver</a></li>
+            <li><a href="#collection">Statement Designs</a></li>
+          </ul>
+        </div>
+        <div class="mega-column">
+          <h3>Discover</h3>
+          <ul>
+            <li><a href="#features">Our Craft</a></li>
+            <li><a href="#about">Design Philosophy</a></li>
+            <li><a href="#contact">Personal Enquiries</a></li>
+          </ul>
+        </div>
+        <div class="mega-feature">
+          <span class="eyebrow">The HUR edit</span>
+          <h3>Made to be remembered.</h3>
+          <p>Thoughtful silver pieces. Quiet confidence. Lasting style.</p>
+          <a class="text-link" href="#collection">Explore HUR ↗</a>
+        </div>
+      </div>
+    </li>
+
+    <li class="has-mega">
+      <a class="nav-link" href="#features">
+        The Details <span class="arrow">⌄</span>
+      </a>
+      <input class="submenu-toggle" type="checkbox" id="details-menu">
+      <label class="submenu-label" for="details-menu" aria-label="Toggle details submenu"></label>
+      <div class="mega-menu">
+        <div class="mega-column">
+          <h3>Our Approach</h3>
+          <ul>
+            <li><a href="#features">Considered Design</a></li>
+            <li><a href="#features">Timeless Style</a></li>
+            <li><a href="#features">Everyday Versatility</a></li>
+          </ul>
+        </div>
+        <div class="mega-column">
+          <h3>Find Your Piece</h3>
+          <ul>
+            <li><a href="#collection">For Every Day</a></li>
+            <li><a href="#collection">For Your Moments</a></li>
+            <li><a href="#contact">Ask HUR</a></li>
+          </ul>
+        </div>
+        <div class="mega-feature">
+          <span class="eyebrow">Less, but better</span>
+          <h3>Details make the difference.</h3>
+          <p>Explore the ideas behind our understated aesthetic.</p>
+          <a class="text-link" href="#features">Our values ↗</a>
+        </div>
+      </div>
+    </li>
+
+    <li class="has-mega">
+      <a class="nav-link" href="#about">
+        The House <span class="arrow">⌄</span>
+      </a>
+      <input class="submenu-toggle" type="checkbox" id="house-menu">
+      <label class="submenu-label" for="house-menu" aria-label="Toggle house submenu"></label>
+      <div class="mega-menu">
+        <div class="mega-column">
+          <h3>HUR, Uncovered</h3>
+          <ul>
+            <li><a href="#about">Our Story</a></li>
+            <li><a href="#about">Our Philosophy</a></li>
+            <li><a href="#about">The HUR Point of View</a></li>
+          </ul>
+        </div>
+        <div class="mega-column">
+          <h3>Stay Connected</h3>
+          <ul>
+            <li><a href="#contact">Contact HUR</a></li>
+            <li><a href="https://www.instagram.com/hur__official/" target="_blank" rel="noopener noreferrer">Instagram ↗</a></li>
+            <li><a href="#collection">The Collection</a></li>
+          </ul>
+        </div>
+        <div class="mega-feature">
+          <span class="eyebrow">The HUR philosophy</span>
+          <h3>Wear your story.</h3>
+          <p>Personal, expressive, and never defined by a passing trend.</p>
+          <a class="text-link" href="#about">Meet HUR ↗</a>
+        </div>
+      </div>
+    </li>
+
+    <li><a class="nav-link" href="#contact">Contact</a></li>
+    <li class="nav-cta"><a href="#collection">Explore HUR <span>↗</span></a></li>
+  </ul>
+</header>
+
+<main>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-content">
+      <span class="hero-badge">HUR Official · Silver Accessories</span>
+      <h1 id="hero-title">Elegance in <span>Every Detail</span></h1>
+      <p>
+        Discover a considered collection of silver accessories.
+        Understated design, expressive details, and timeless appeal.
+      </p>
+      <div class="hero-buttons">
+        <a class="button" href="#collection">Explore Collection ↗</a>
+        <a class="button button-outline" href="#about">Discover Our Story</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section collection" id="collection">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">The HUR Collection</span>
+        <h2>Find your signature.</h2>
+        <p>Pieces that feel personal, effortlessly refined, and easy to make your own.</p>
+      </div>
+
+      <div class="collection-grid">
+        <article class="collection-card">
+          <span class="eyebrow">01 / Everyday</span>
+          <h3>Everyday Silver</h3>
+          <p>Quiet details for your daily ritual.</p>
+          <a class="text-link" href="#contact">Discover more ↗</a>
+        </article>
+
+        <article class="collection-card">
+          <span class="eyebrow">02 / Signature</span>
+          <h3>Signature Pieces</h3>
+          <p>Distinctive design, lasting presence.</p>
+          <a class="text-link" href="#contact">Discover more ↗</a>
+        </article>
+
+        <article class="collection-card">
+          <span class="eyebrow">03 / Statement</span>
+          <h3>Modern Classics</h3>
+          <p>Timeless shapes with a contemporary spirit.</p>
+          <a class="text-link" href="#contact">Discover more ↗</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">The HUR Difference</span>
+        <h2>Thoughtfully considered.</h2>
+        <p>We believe that the smallest details can make the most meaningful impression.</p>
+      </div>
+
+      <div class="features-grid">
+        <article class="feature">
+          <span class="feature-number">01</span>
+          <h3>Considered Design</h3>
+          <p>Clean lines and thoughtful proportions create a look that feels modern without chasing trends.</p>
+        </article>
+        <article class="feature">
+          <span class="feature-number">02</span>
+          <h3>Timeless Appeal</h3>
+          <p>Versatile pieces designed to complement your own style and accompany different moments.</p>
+        </article>
+        <article class="feature">
+          <span class="feature-number">03</span>
+          <h3>Personal Expression</h3>
+          <p>Discover accessories that let you express your individuality with quiet confidence.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section about" id="about">
+    <div class="container about-grid">
+      <div class="about-art" aria-label="HUR monogram artwork">
+        <span class="about-monogram">HUR</span>
+      </div>
+      <div class="about-copy">
+        <span class="eyebrow">The House of HUR</span>
+        <h2>Quiet luxury.<br>Personal style.</h2>
+        <p>
+          HUR is guided by a simple idea: style does not need to be loud
+          to be noticed. We celebrate thoughtful details, considered
+          design, and the confidence that comes from choosing pieces
+          that feel like you.
+        </p>
+        <p>
+          Explore the collection and find your own interpretation
+          of modern elegance.
+        </p>
+        <a class="button" href="#collection">Discover the Collection ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section contact" id="contact">
+    <div class="container">
+      <span class="eyebrow">A Note to HUR</span>
+      <h2>Let's connect.</h2>
+      <p>
+        Have a question about a piece or want to learn more about HUR?
+        We would love to hear from you.
+      </p>
+      <a class="button" href="https://www.instagram.com/hur__official/" target="_blank" rel="noopener noreferrer">
+        Contact HUR on Instagram ↗
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <a class="footer-brand" href="#top">HUR</a>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="#collection">Collection</a>
+        <a href="#features">The Details</a>
+        <a href="#about">The House</a>
+        <a href="#contact">Contact</a>
+        <a href="https://www.instagram.com/hur__official/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      © 2026 HUR Official. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
