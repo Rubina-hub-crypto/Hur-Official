@@ -1,1 +1,213 @@
 
+/* HUR — CSS-only responsive mega menu */
+
+.menu-toggle {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.menu-toggle-label {
+  display: none;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1003;
+}
+
+.menu-toggle-label span,
+.menu-toggle-label span::before,
+.menu-toggle-label span::after {
+  position: absolute;
+  display: block;
+  width: 25px;
+  height: 1.5px;
+  background: var(--hur-ink);
+  transition: transform .25s ease, top .25s ease;
+}
+
+.menu-toggle-label span {
+  position: relative;
+}
+
+.menu-toggle-label span::before,
+.menu-toggle-label span::after {
+  content: "";
+  left: 0;
+}
+
+.menu-toggle-label span::before {
+  top: -7px;
+}
+
+.menu-toggle-label span::after {
+  top: 7px;
+}
+
+.nav-backdrop {
+  display: none;
+}
+
+@media (max-width: 1020px) {
+  .menu-toggle-label {
+    display: flex;
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1002;
+    display: flex;
+    width: min(440px, 90vw);
+    height: 100vh;
+    height: 100dvh;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0;
+    overflow-y: auto;
+    padding: 100px 25px 40px;
+    background: var(--hur-paper);
+    box-shadow: -20px 0 50px rgba(32, 31, 28, .1);
+    transform: translateX(105%);
+    visibility: hidden;
+    transition: transform .35s ease, visibility .35s ease;
+  }
+
+  #menu-toggle:checked ~ .nav-menu {
+    transform: translateX(0);
+    visibility: visible;
+  }
+
+  #menu-toggle:checked ~ .menu-toggle-label span {
+    background: transparent;
+  }
+
+  #menu-toggle:checked ~ .menu-toggle-label span::before {
+    top: 0;
+    transform: rotate(45deg);
+  }
+
+  #menu-toggle:checked ~ .menu-toggle-label span::after {
+    top: 0;
+    transform: rotate(-45deg);
+  }
+
+  .nav-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1001;
+    display: block;
+    background: rgba(25, 24, 22, .42);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s ease, visibility .3s ease;
+  }
+
+  #menu-toggle:checked ~ .nav-backdrop {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .nav-menu > li {
+    position: relative;
+    width: 100%;
+    border-bottom: 1px solid var(--hur-silver);
+  }
+
+  .nav-menu > li > a {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 19px 2px;
+    font-size: 11px;
+  }
+
+  .mega-menu {
+    position: static;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0;
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: none;
+    transition: opacity .25s ease;
+  }
+
+  .nav-menu > li.has-mega:focus-within > .mega-menu {
+    max-height: 1200px;
+    padding: 8px 0 24px;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .mega-menu-col {
+    padding-top: 18px;
+  }
+
+  .mega-menu-col h4 {
+    font-size: 21px;
+    margin-bottom: 12px;
+  }
+
+  .mega-menu-col ul {
+    gap: 10px;
+  }
+
+  .mega-menu-col ul a {
+    font-size: 11px;
+  }
+
+  .mega-menu-col.featured {
+    grid-column: 1 / -1;
+    min-height: 210px;
+    margin-top: 20px;
+  }
+
+  .nav-cta {
+    margin-top: 20px;
+    border-bottom: 0 !important;
+  }
+
+  .nav-cta a {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar .logo-svg {
+    width: 36px;
+    height: 36px;
+  }
+
+  .navbar .logo-text {
+    font-size: 24px;
+    letter-spacing: 3px;
+  }
+
+  .nav-menu {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .mega-menu-col.featured {
+    min-height: 200px;
+  }
+}
+
