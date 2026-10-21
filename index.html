@@ -345,7 +345,7 @@
         .category-item span { font-size: 0.9rem; font-weight: 500; color: var(--text); }
 
         /* ============================================
-           COLLECTIONS SECTION — AREVA, RUNE, HALO, GLOW
+           COLLECTIONS INTRO + MINI PREVIEW CARDS
            ============================================ */
         .collections-intro {
             padding: 6rem 5% 3rem;
@@ -366,8 +366,107 @@
             font-weight: 500;
             color: var(--dark);
             letter-spacing: -0.5px;
+            margin-bottom: 3rem;
         }
 
+        /* Mini collection preview cards */
+        .collections-preview {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+        .preview-card {
+            position: relative;
+            aspect-ratio: 3/4;
+            overflow: hidden;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            background: var(--cream);
+        }
+        .preview-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.8s ease;
+        }
+        .preview-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 50%, transparent 100%);
+            z-index: 1;
+            transition: opacity 0.3s ease;
+        }
+        .preview-card:hover img {
+            transform: scale(1.06);
+        }
+        .preview-card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            z-index: 2;
+            color: var(--white);
+            text-align: left;
+        }
+        .preview-card-tag {
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            margin-bottom: 0.4rem;
+            font-weight: 500;
+        }
+        .preview-card-title {
+            font-family: var(--font-heading);
+            font-size: 1.75rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin-bottom: 0.25rem;
+        }
+        .preview-card-sub {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.75);
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+        .preview-card-arrow {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            opacity: 0;
+            transform: translate(-5px, 5px);
+            transition: var(--transition);
+        }
+        .preview-card:hover .preview-card-arrow {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+        .preview-card-arrow svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--white);
+        }
+
+        /* ============================================
+           COLLECTION BLOCKS
+           ============================================ */
         .collection-block {
             padding: 5rem 5%;
             position: relative;
@@ -462,15 +561,6 @@
             font-weight: 300;
         }
         .collection-block.dark .collection-desc-armenian { color: rgba(255,255,255,0.6); }
-        .collection-signature {
-            font-family: var(--font-heading);
-            font-size: 1.1rem;
-            font-weight: 600;
-            letter-spacing: 2px;
-            margin-top: 1.5rem;
-            color: var(--dark);
-        }
-        .collection-block.dark .collection-signature { color: var(--white); }
 
         /* Product grid within collection */
         .collection-products {
@@ -492,12 +582,6 @@
             letter-spacing: 1px;
         }
         .collection-block.dark .collection-products-header h3 { color: var(--white); }
-        .collection-products-header span {
-            font-size: 0.8rem;
-            color: var(--silver-dark);
-            letter-spacing: 1px;
-        }
-        .collection-block.dark .collection-products-header span { color: rgba(255,255,255,0.5); }
 
         .products-grid {
             display: grid;
@@ -511,6 +595,8 @@
             border-radius: 4px;
             background: var(--cream);
             cursor: pointer;
+            display: block;
+            text-decoration: none;
         }
         .collection-block.dark .product-tile { background: #2a2a2a; }
         .product-tile img {
@@ -520,19 +606,116 @@
             object-position: center;
             transition: transform 0.6s ease;
             padding: 1rem;
+            display: block;
         }
         .product-tile:hover img {
             transform: scale(1.05);
         }
         .product-tile::after {
-            content: '';
+            content: 'View';
             position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.3), transparent 40%);
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            padding: 0.5rem 1.25rem;
+            background: rgba(255,255,255,0.95);
+            color: var(--dark);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 500;
+            border-radius: 50px;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: var(--transition);
+            z-index: 2;
         }
-        .product-tile:hover::after { opacity: 1; }
+        .product-tile:hover::after {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ============================================
+           LIGHTBOX — CSS-only with :target
+           ============================================ */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            padding: 2rem;
+        }
+        .lightbox:target {
+            opacity: 1;
+            visibility: visible;
+        }
+        .lightbox-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox-content img {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: -3rem;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--white);
+            font-size: 1.25rem;
+            transition: var(--transition);
+        }
+        .lightbox-close:hover {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: var(--dark);
+        }
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--white);
+            transition: var(--transition);
+        }
+        .lightbox-nav:hover {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: var(--dark);
+        }
+        .lightbox-nav svg { width: 18px; height: 18px; stroke: currentColor; }
+        .lightbox-prev { left: -4rem; }
+        .lightbox-next { right: -4rem; }
 
         /* ============================================
            ABOUT SECTION
@@ -727,11 +910,14 @@
            ============================================ */
         @media (max-width: 1024px) {
             .categories-grid { grid-template-columns: repeat(3, 1fr); }
+            .collections-preview { grid-template-columns: repeat(2, 1fr); }
             .products-grid { grid-template-columns: repeat(3, 1fr); }
             .collection-hero { grid-template-columns: 1fr; gap: 2.5rem; }
             .collection-hero.reverse { grid-template-columns: 1fr; }
             .collection-hero.reverse .collection-hero-image { order: 0; }
             .collection-hero.reverse .collection-hero-text { order: 0; }
+            .lightbox-prev { left: 0.5rem; }
+            .lightbox-next { right: 0.5rem; }
             .footer-content { grid-template-columns: 1fr 1fr; }
         }
         @media (max-width: 768px) {
@@ -758,15 +944,21 @@
             .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
             .category-icon { width: 80px; height: 80px; }
             .category-icon svg { width: 40px; height: 40px; }
+            .collections-preview { grid-template-columns: 1fr 1fr; gap: 1rem; padding: 0 5%; }
+            .preview-card-title { font-size: 1.35rem; }
             .products-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
             .collection-block { padding: 3.5rem 5%; }
             .collection-hero { gap: 2rem; margin-bottom: 2.5rem; }
             .about-stats { flex-direction: column; gap: 2rem; }
             .contact { grid-template-columns: 1fr; gap: 3rem; }
             .footer-content { grid-template-columns: 1fr; gap: 2rem; }
+            .lightbox-prev { left: 0.5rem; top: auto; bottom: 1rem; }
+            .lightbox-next { right: 0.5rem; top: auto; bottom: 1rem; }
+            .lightbox-close { top: 1rem; right: 1rem; }
         }
         @media (max-width: 480px) {
             .categories-grid { grid-template-columns: repeat(2, 1fr); }
+            .collections-preview { grid-template-columns: 1fr; }
             .products-grid { grid-template-columns: repeat(2, 1fr); }
             .top-bar .logo-text { font-size: 1.3rem; }
             .top-bar .logo-svg { width: 34px; height: 34px; }
@@ -936,11 +1128,73 @@
     </section>
 
     <!-- ============================================
-         COLLECTIONS INTRO
+         COLLECTIONS INTRO + MINI PREVIEW CARDS
          ============================================ -->
     <section class="collections-intro" id="collections">
         <span class="section-label">Our World</span>
         <h2>The Collections</h2>
+
+        <div class="collections-preview">
+            <a href="#areva" class="preview-card">
+                <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2113.33.54.jpg?v=1792575373" alt="AREVA Collection">
+                <div class="preview-card-arrow">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="7" y1="17" x2="17" y2="7"/>
+                        <polyline points="7 7 17 7 17 17"/>
+                    </svg>
+                </div>
+                <div class="preview-card-content">
+                    <div class="preview-card-tag">Collection I</div>
+                    <div class="preview-card-title">AREVA</div>
+                    <div class="preview-card-sub">ԱՐԵՎԱ · Sun Symbol</div>
+                </div>
+            </a>
+
+            <a href="#rune" class="preview-card">
+                <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2113.54.54.jpg?v=1792576557" alt="RUNE Collection">
+                <div class="preview-card-arrow">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="7" y1="17" x2="17" y2="7"/>
+                        <polyline points="7 7 17 7 17 17"/>
+                    </svg>
+                </div>
+                <div class="preview-card-content">
+                    <div class="preview-card-tag">Collection II</div>
+                    <div class="preview-card-title">RUNE</div>
+                    <div class="preview-card-sub">Strength in Contrast</div>
+                </div>
+            </a>
+
+            <a href="#halo" class="preview-card">
+                <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2114.04.42.jpg?v=1792577243" alt="HALO Collection">
+                <div class="preview-card-arrow">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="7" y1="17" x2="17" y2="7"/>
+                        <polyline points="7 7 17 7 17 17"/>
+                    </svg>
+                </div>
+                <div class="preview-card-content">
+                    <div class="preview-card-tag">Collection III</div>
+                    <div class="preview-card-title">HALO</div>
+                    <div class="preview-card-sub">Inner Light · Balance</div>
+                </div>
+            </a>
+
+            <a href="#glow" class="preview-card">
+                <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2114.10.00.jpg?v=1792577437" alt="GLOW Collection">
+                <div class="preview-card-arrow">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="7" y1="17" x2="17" y2="7"/>
+                        <polyline points="7 7 17 7 17 17"/>
+                    </svg>
+                </div>
+                <div class="preview-card-content">
+                    <div class="preview-card-tag">Collection IV</div>
+                    <div class="preview-card-title">GLOW</div>
+                    <div class="preview-card-sub">First Stone · Warmth</div>
+                </div>
+            </a>
+        </div>
     </section>
 
     <!-- ============================================
@@ -953,29 +1207,25 @@
             </div>
             <div class="collection-hero-text">
                 <span class="collection-tag">Collection I</span>
-                <h2 class="collection-title">AREVA<br>ԱՐՎԱ</h2>
+                <h2 class="collection-title">AREVA<br>ԱՐԵՎԱ</h2>
                 <p class="collection-subtitle">by HUR ⛓🤍</p>
                 <p class="collection-desc">A symbol of the sun, rooted in Armenian stone. Reimagined in silver.</p>
-                <p class="collection-desc">Ancient form. Modern silver. ️</p>
-                <p class="collection-signature">AREVA by HUR</p>
+                <p class="collection-desc">Ancient form. Modern silver. ♾️</p>
             </div>
         </div>
 
         <div class="collection-products">
             <div class="collection-products-header">
                 <h3>The Pieces</h3>
-                <span>10 pieces</span>
             </div>
             <div class="products-grid">
-                <div class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2113.34.17.jpg?v=1792575374" alt="AREVA piece"></div>
-                <div class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2113.34.30.jpg?v=1792575373" alt="AREVA piece"></div>
-                <div class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2113.34.38.jpg?v=1792575373" alt="AREVA piece"></div>
-                <div class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2113.34.47.jpg?v=1792575374" alt="AREVA piece"></div>
-                <div class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2113.34.54.jpg?v=1792575374" alt="AREVA piece"></div>
-                <div class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2113.35.05.jpg?v=1792575374" alt="AREVA piece"></div>
-                <div class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-21_13.47.05.jpg?v=1792576050" alt="AREVA piece"></div>
-                <div class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-21_13.49.51.jpg?v=1792576299" alt="AREVA piece"></div>
-                <div class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-21_13.50.09.jpg?v=1792576308" alt="AREVA piece"></div>
+                <a href="#lb-a1" class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2113.34.17.jpg?v=1792575374" alt="AREVA piece"></a>
+                <a href="#lb-a2" class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2113.34.30.jpg?v=1792575373" alt="AREVA piece"></a>
+                <a href="#lb-a3" class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2113.34.38.jpg?v=1792575373" alt="AREVA piece"></a>
+                <a href="#lb-a4" class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2113.34.47.jpg?v=1792575374" alt="AREVA piece"></a>
+                <a href="#lb-a5" class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-21_13.47.05.jpg?v=1792576050" alt="AREVA piece"></a>
+                <a href="#lb-a6" class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-21_13.49.51.jpg?v=1792576299" alt="AREVA piece"></a>
+                <a href="#lb-a7" class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-21_13.50.09.jpg?v=1792576308" alt="AREVA piece"></a>
             </div>
         </div>
     </section>
@@ -996,20 +1246,18 @@
                 <p class="collection-desc">RUNE is a study of contrasts — polished silver, raw texture and a sharp silhouette.</p>
                 <p class="collection-desc">A reminder that strength doesn't always need to be loud.</p>
                 <p class="collection-desc" style="margin-top: 1.5rem; font-style: italic;">Wear your mark.</p>
-                <p class="collection-signature">RUNE by HUR </p>
             </div>
         </div>
 
         <div class="collection-products">
             <div class="collection-products-header">
                 <h3>The Pieces</h3>
-                <span>5 pieces</span>
             </div>
             <div class="products-grid">
-                <div class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-21_13.56.18.jpg?v=1792576618" alt="RUNE piece"></div>
-                <div class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-21_13.56.01.jpg?v=1792576618" alt="RUNE piece"></div>
-                <div class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-21_13.56.23.jpg?v=1792576618" alt="RUNE piece"></div>
-                <div class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-21_13.56.11.jpg?v=1792576618" alt="RUNE piece"></div>
+                <a href="#lb-r1" class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-21_13.56.18.jpg?v=1792576618" alt="RUNE piece"></a>
+                <a href="#lb-r2" class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-21_13.56.01.jpg?v=1792576618" alt="RUNE piece"></a>
+                <a href="#lb-r3" class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-21_13.56.23.jpg?v=1792576618" alt="RUNE piece"></a>
+                <a href="#lb-r4" class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-21_13.56.11.jpg?v=1792576618" alt="RUNE piece"></a>
             </div>
         </div>
     </section>
@@ -1025,26 +1273,24 @@
             <div class="collection-hero-text">
                 <span class="collection-tag">Collection III</span>
                 <h2 class="collection-title">HALO</h2>
-                <p class="collection-subtitle">by HUR 🤍</p>
-                <p class="collection-desc-armenian">Պարզությունը երբեմն ամենահամարակ ընտրությունն է։</p>
+                <p class="collection-subtitle">by HUR 🤍⛓</p>
+                <p class="collection-desc-armenian">Պարզությունը երբեմն ամենահամարձակ ընտրությունն է։</p>
                 <p class="collection-desc-armenian">HALO-ն մարմնավորում է լույսի, ձևի և հավասարակշռության ներդաշնակությունը։</p>
-                <p class="collection-desc-armenian">Յուրաքանչյուր շրջան հիշեցնում է անվերջ շարման, ամբողջականության և լուռ ուժի մասին։</p>
-                <p class="collection-desc-armenian">Այս գաղափարն է դարել հավաքածուի հիմքը. շրջանը որհրդանշում է ներքին լույսը, իսկ արծաթի և սպիտակ քվարցի համադրությունը փոխանցում է այդ մաքրությունն ու պարզությունը։</p>
+                <p class="collection-desc-armenian">Յուրաքանչյուր շրջան հիշեցնում է անվերջ շարժման, ամբողջականության և լուռ ուժի մասին։</p>
+                <p class="collection-desc-armenian">Այս գաղափարն է դարել հավաքածուի հիմքը. շրջանը խորհրդանշում է ներքին լույսը, իսկ արծաթի և սպիտակ քվարցի համադրությունը փոխանցում է այդ մաքրությունն ու պարզությունը։</p>
                 <p class="collection-desc-armenian">Այս հավաքածուն ստեղծված է հիշեցնելու, որ իսկական լույսը միշտ գալիս է ներսից։</p>
-                <p class="collection-signature">HALO by HUR</p>
             </div>
         </div>
 
         <div class="collection-products">
             <div class="collection-products-header">
                 <h3>The Pieces</h3>
-                <span>5 pieces</span>
             </div>
             <div class="products-grid">
-                <div class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2114.04.46.jpg?v=1792577243" alt="HALO piece"></div>
-                <div class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2114.04.55.jpg?v=1792577242" alt="HALO piece"></div>
-                <div class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2114.05.06.jpg?v=1792577243" alt="HALO piece"></div>
-                <div class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2114.05.15.jpg?v=1792577243" alt="HALO piece"></div>
+                <a href="#lb-h1" class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2114.04.46.jpg?v=1792577243" alt="HALO piece"></a>
+                <a href="#lb-h2" class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2114.04.55.jpg?v=1792577242" alt="HALO piece"></a>
+                <a href="#lb-h3" class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2114.05.06.jpg?v=1792577243" alt="HALO piece"></a>
+                <a href="#lb-h4" class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2114.05.15.jpg?v=1792577243" alt="HALO piece"></a>
             </div>
         </div>
     </section>
@@ -1060,27 +1306,172 @@
             <div class="collection-hero-text">
                 <span class="collection-tag">Collection IV</span>
                 <h2 class="collection-title">GLOW<br>Cuff</h2>
-                <p class="collection-subtitle">by HUR 🧡⛓️</p>
+                <p class="collection-subtitle">by HUR 🧡️💥</p>
                 <p class="collection-desc">Our first design featuring a stone.</p>
                 <p class="collection-desc">A subtle glow meets dark, textured silver — creating a contrast of warmth and raw character.</p>
                 <p class="collection-desc">A new expression of HUR. ⛓</p>
-                <p class="collection-desc-armenian" style="margin-top: 1.5rem;">Առաջին անգամ քար HUR-ի զարդերում։</p>
-                <p class="collection-desc-armenian">Քարի մեղմ փայլն ու մուգ, տեքստուրային արծաթը միավորվում են՝ ստեղծելով հակադրություն, որն ունի իր յուրահատուկ բնավորությունը։</p>
-                <p class="collection-signature">GLOW by HUR</p>
+                <p class="collection-desc-armenian" style="margin-top: 1.5rem;">Առաջին անգամ՝ քար HUR-ի զարդերում։</p>
+                <p class="collection-desc-armenian">արի մեղմ փայլն ու մուգ, տեքստուրային արծաթը միավորվում են՝ ստեղծելով հակադրություն, որն ունի իր յուրահատուկ բնավորությունը։</p>
             </div>
         </div>
 
         <div class="collection-products">
             <div class="collection-products-header">
                 <h3>The Pieces</h3>
-                <span>3 pieces</span>
             </div>
             <div class="products-grid">
-                <div class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2114.10.05.jpg?v=1792577437" alt="GLOW piece"></div>
-                <div class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2114.10.09.jpg?v=1792577437" alt="GLOW piece"></div>
+                <a href="#lb-g1" class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2114.10.05.jpg?v=1792577437" alt="GLOW piece"></a>
+                <a href="#lb-g2" class="product-tile"><img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2114.10.09.jpg?v=1792577437" alt="GLOW piece"></a>
             </div>
         </div>
     </section>
+
+    <!-- ============================================
+         LIGHTBOXES — CSS-only :target
+         ============================================ -->
+    <!-- AREVA Lightboxes -->
+    <div id="lb-a1" class="lightbox">
+        <div class="lightbox-content">
+            <a href="#areva" class="lightbox-close">✕</a>
+            <a href="#lb-a7" class="lightbox-nav lightbox-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></a>
+            <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2113.34.17.jpg?v=1792575374" alt="AREVA piece">
+            <a href="#lb-a2" class="lightbox-nav lightbox-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+    </div>
+    <div id="lb-a2" class="lightbox">
+        <div class="lightbox-content">
+            <a href="#areva" class="lightbox-close">✕</a>
+            <a href="#lb-a1" class="lightbox-nav lightbox-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></a>
+            <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2113.34.30.jpg?v=1792575373" alt="AREVA piece">
+            <a href="#lb-a3" class="lightbox-nav lightbox-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+    </div>
+    <div id="lb-a3" class="lightbox">
+        <div class="lightbox-content">
+            <a href="#areva" class="lightbox-close">✕</a>
+            <a href="#lb-a2" class="lightbox-nav lightbox-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></a>
+            <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2113.34.38.jpg?v=1792575373" alt="AREVA piece">
+            <a href="#lb-a4" class="lightbox-nav lightbox-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+    </div>
+    <div id="lb-a4" class="lightbox">
+        <div class="lightbox-content">
+            <a href="#areva" class="lightbox-close">✕</a>
+            <a href="#lb-a3" class="lightbox-nav lightbox-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></a>
+            <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2113.34.47.jpg?v=1792575374" alt="AREVA piece">
+            <a href="#lb-a5" class="lightbox-nav lightbox-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+    </div>
+    <div id="lb-a5" class="lightbox">
+        <div class="lightbox-content">
+            <a href="#areva" class="lightbox-close">✕</a>
+            <a href="#lb-a4" class="lightbox-nav lightbox-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></a>
+            <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-21_13.47.05.jpg?v=1792576050" alt="AREVA piece">
+            <a href="#lb-a6" class="lightbox-nav lightbox-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+    </div>
+    <div id="lb-a6" class="lightbox">
+        <div class="lightbox-content">
+            <a href="#areva" class="lightbox-close">✕</a>
+            <a href="#lb-a5" class="lightbox-nav lightbox-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></a>
+            <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-21_13.49.51.jpg?v=1792576299" alt="AREVA piece">
+            <a href="#lb-a7" class="lightbox-nav lightbox-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+    </div>
+    <div id="lb-a7" class="lightbox">
+        <div class="lightbox-content">
+            <a href="#areva" class="lightbox-close">✕</a>
+            <a href="#lb-a6" class="lightbox-nav lightbox-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></a>
+            <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-21_13.50.09.jpg?v=1792576308" alt="AREVA piece">
+            <a href="#lb-a1" class="lightbox-nav lightbox-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+    </div>
+
+    <!-- RUNE Lightboxes -->
+    <div id="lb-r1" class="lightbox">
+        <div class="lightbox-content">
+            <a href="#rune" class="lightbox-close">✕</a>
+            <a href="#lb-r4" class="lightbox-nav lightbox-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></a>
+            <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-21_13.56.18.jpg?v=1792576618" alt="RUNE piece">
+            <a href="#lb-r2" class="lightbox-nav lightbox-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+    </div>
+    <div id="lb-r2" class="lightbox">
+        <div class="lightbox-content">
+            <a href="#rune" class="lightbox-close"></a>
+            <a href="#lb-r1" class="lightbox-nav lightbox-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></a>
+            <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-21_13.56.01.jpg?v=1792576618" alt="RUNE piece">
+            <a href="#lb-r3" class="lightbox-nav lightbox-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+    </div>
+    <div id="lb-r3" class="lightbox">
+        <div class="lightbox-content">
+            <a href="#rune" class="lightbox-close">✕</a>
+            <a href="#lb-r2" class="lightbox-nav lightbox-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></a>
+            <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-21_13.56.23.jpg?v=1792576618" alt="RUNE piece">
+            <a href="#lb-r4" class="lightbox-nav lightbox-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+    </div>
+    <div id="lb-r4" class="lightbox">
+        <div class="lightbox-content">
+            <a href="#rune" class="lightbox-close">✕</a>
+            <a href="#lb-r3" class="lightbox-nav lightbox-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></a>
+            <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-21_13.56.11.jpg?v=1792576618" alt="RUNE piece">
+            <a href="#lb-r1" class="lightbox-nav lightbox-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+    </div>
+
+    <!-- HALO Lightboxes -->
+    <div id="lb-h1" class="lightbox">
+        <div class="lightbox-content">
+            <a href="#halo" class="lightbox-close">✕</a>
+            <a href="#lb-h4" class="lightbox-nav lightbox-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></a>
+            <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2114.04.46.jpg?v=1792577243" alt="HALO piece">
+            <a href="#lb-h2" class="lightbox-nav lightbox-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+    </div>
+    <div id="lb-h2" class="lightbox">
+        <div class="lightbox-content">
+            <a href="#halo" class="lightbox-close">✕</a>
+            <a href="#lb-h1" class="lightbox-nav lightbox-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></a>
+            <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2114.04.55.jpg?v=1792577242" alt="HALO piece">
+            <a href="#lb-h3" class="lightbox-nav lightbox-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+    </div>
+    <div id="lb-h3" class="lightbox">
+        <div class="lightbox-content">
+            <a href="#halo" class="lightbox-close"></a>
+            <a href="#lb-h2" class="lightbox-nav lightbox-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></a>
+            <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2114.05.06.jpg?v=1792577243" alt="HALO piece">
+            <a href="#lb-h4" class="lightbox-nav lightbox-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+    </div>
+    <div id="lb-h4" class="lightbox">
+        <div class="lightbox-content">
+            <a href="#halo" class="lightbox-close">✕</a>
+            <a href="#lb-h3" class="lightbox-nav lightbox-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></a>
+            <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2114.05.15.jpg?v=1792577243" alt="HALO piece">
+            <a href="#lb-h1" class="lightbox-nav lightbox-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+    </div>
+
+    <!-- GLOW Lightboxes -->
+    <div id="lb-g1" class="lightbox">
+        <div class="lightbox-content">
+            <a href="#glow" class="lightbox-close"></a>
+            <a href="#lb-g2" class="lightbox-nav lightbox-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></a>
+            <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2114.10.05.jpg?v=1792577437" alt="GLOW piece">
+            <a href="#lb-g2" class="lightbox-nav lightbox-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+    </div>
+    <div id="lb-g2" class="lightbox">
+        <div class="lightbox-content">
+            <a href="#glow" class="lightbox-close">✕</a>
+            <a href="#lb-g1" class="lightbox-nav lightbox-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></a>
+            <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2114.10.09.jpg?v=1792577437" alt="GLOW piece">
+            <a href="#lb-g1" class="lightbox-nav lightbox-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+    </div>
 
     <!-- ============================================
          ABOUT SECTION
@@ -1223,4 +1614,3 @@
 
 </body>
 </html>
-
