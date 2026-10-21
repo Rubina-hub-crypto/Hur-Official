@@ -27,8 +27,6 @@
             --gold-light: #d4b88a;
             --text: #2a2a2a;
             --text-light: #6b6b6b;
-            --gradient-brand: linear-gradient(135deg, #f7971e, #ff6b9d, #c471ed);
-            --gradient-gold: linear-gradient(135deg, #b8935a, #d4b88a, #b8935a);
             --font-heading: 'Cormorant Garamond', Georgia, serif;
             --font-body: 'Inter', -apple-system, sans-serif;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -186,7 +184,7 @@
         .menu-toggle-label span::after { content: ''; top: 6px; }
 
         /* ============================================
-           HERO CAROUSEL — Fixed for Portrait Images
+           HERO CAROUSEL — Full Width, Tall Banner
            ============================================ */
         .hero-carousel {
             position: relative;
@@ -201,13 +199,12 @@
             pointer-events: none;
         }
 
-        /* Reduced height to prevent excessive cropping */
+        /* Tall banner - no max-height limit so portrait content is visible */
         .hero-slides {
             position: relative;
             width: 100%;
-            height: 65vh;
-            min-height: 450px;
-            max-height: 700px;
+            height: 90vh;
+            min-height: 600px;
         }
 
         .hero-slide {
@@ -237,14 +234,14 @@
             object-position: center center;
         }
 
-        /* Slide 2: Eye/Face image - show upper portion */
+        /* Slide 2: Eye/Face image - show upper portion with eyes */
         .slide-2 img {
-            object-position: center 15%;
+            object-position: center 20%;
         }
 
         /* Slide 3: Bag image - show lower portion with HUR text */
         .slide-3 img {
-            object-position: center 65%;
+            object-position: center 70%;
         }
 
         #slide-1:checked ~ .hero-slides .slide-1,
@@ -689,7 +686,7 @@
             .menu-toggle:checked ~ .menu-toggle-label span::after { transform: rotate(-45deg); top: 0; }
             .nav-bar-inner { flex-direction: column; padding: 1rem 0; }
             .nav-bar a { padding: 0.85rem 1.5rem; width: 100%; justify-content: center; }
-            .hero-slides { height: 55vh; min-height: 380px; }
+            .hero-slides { height: 75vh; min-height: 500px; }
             .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
             .category-icon { width: 80px; height: 80px; }
             .category-icon svg { width: 40px; height: 40px; }
@@ -702,7 +699,7 @@
             .collection-grid { grid-template-columns: 1fr; }
             .top-bar .logo-text { font-size: 1.3rem; }
             .top-bar .logo-svg { width: 34px; height: 34px; }
-            .hero-slides { height: 50vh; min-height: 320px; }
+            .hero-slides { height: 70vh; min-height: 450px; }
         }
     </style>
 </head>
@@ -772,7 +769,7 @@
     </nav>
 
     <!-- ============================================
-         HERO CAROUSEL
+         HERO CAROUSEL — Full Width Tall Banner
          ============================================ -->
     <section class="hero-carousel">
         <input type="radio" name="hero-slide" id="slide-1" checked>
