@@ -1,23 +1,4 @@
-
-                        <!DOCTYPE html>
-                        <html lang="en">
-                        <head>
-                            <meta charset="UTF-8">
-                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <style>
-                body {
-                  background-color: white; /* Ensure the iframe has a white background */
-                }
-
-                .slide-2 img {
-    object-position: center 25%;
-}
-
-
-              </style>
-                        </head>
-                        <body>
-                            <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -205,7 +186,7 @@
         .menu-toggle-label span::after { content: ''; top: 6px; }
 
         /* ============================================
-           HERO CAROUSEL — CSS-only with Radio Buttons
+           HERO CAROUSEL — Fixed for Portrait Images
            ============================================ */
         .hero-carousel {
             position: relative;
@@ -214,23 +195,21 @@
             overflow: hidden;
         }
 
-        /* Hide radio inputs */
         .hero-carousel input[type="radio"] {
             position: absolute;
             opacity: 0;
             pointer-events: none;
         }
 
-        /* Slides container */
+        /* Reduced height to prevent excessive cropping */
         .hero-slides {
             position: relative;
             width: 100%;
-            height: 85vh;
-            min-height: 550px;
-            max-height: 900px;
+            height: 65vh;
+            min-height: 450px;
+            max-height: 700px;
         }
 
-        /* Each slide */
         .hero-slide {
             position: absolute;
             inset: 0;
@@ -253,12 +232,21 @@
             display: block;
         }
 
-        /* Slide 2 image — shifted upward to show eyes */
-        .slide-2 img {
-            object-position: center 25%;
+        /* Slide 1: Video - centered */
+        .slide-1 video {
+            object-position: center center;
         }
 
-        /* Show active slide based on checked radio */
+        /* Slide 2: Eye/Face image - show upper portion */
+        .slide-2 img {
+            object-position: center 15%;
+        }
+
+        /* Slide 3: Bag image - show lower portion with HUR text */
+        .slide-3 img {
+            object-position: center 65%;
+        }
+
         #slide-1:checked ~ .hero-slides .slide-1,
         #slide-2:checked ~ .hero-slides .slide-2,
         #slide-3:checked ~ .hero-slides .slide-3 {
@@ -266,7 +254,6 @@
             visibility: visible;
         }
 
-        /* Subtle vignette overlay */
         .hero-slide::after {
             content: '';
             position: absolute;
@@ -277,7 +264,7 @@
         }
 
         /* ============================================
-           CAROUSEL DOTS — Navigation
+           CAROUSEL DOTS
            ============================================ */
         .carousel-dots {
             display: flex;
@@ -304,7 +291,6 @@
             transform: scale(1.15);
         }
 
-        /* Active dot styling */
         #slide-1:checked ~ .carousel-dots label[for="slide-1"],
         #slide-2:checked ~ .carousel-dots label[for="slide-2"],
         #slide-3:checked ~ .carousel-dots label[for="slide-3"] {
@@ -703,7 +689,7 @@
             .menu-toggle:checked ~ .menu-toggle-label span::after { transform: rotate(-45deg); top: 0; }
             .nav-bar-inner { flex-direction: column; padding: 1rem 0; }
             .nav-bar a { padding: 0.85rem 1.5rem; width: 100%; justify-content: center; }
-            .hero-slides { height: 60vh; min-height: 400px; }
+            .hero-slides { height: 55vh; min-height: 380px; }
             .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
             .category-icon { width: 80px; height: 80px; }
             .category-icon svg { width: 40px; height: 40px; }
@@ -716,7 +702,7 @@
             .collection-grid { grid-template-columns: 1fr; }
             .top-bar .logo-text { font-size: 1.3rem; }
             .top-bar .logo-svg { width: 34px; height: 34px; }
-            .hero-slides { height: 55vh; min-height: 350px; }
+            .hero-slides { height: 50vh; min-height: 320px; }
         }
     </style>
 </head>
@@ -786,18 +772,14 @@
     </nav>
 
     <!-- ============================================
-         HERO CAROUSEL — CSS-only Slider
-         Sequence: Video → Image 1 → Image 2
+         HERO CAROUSEL
          ============================================ -->
     <section class="hero-carousel">
-        <!-- Hidden radio inputs for slide control -->
         <input type="radio" name="hero-slide" id="slide-1" checked>
         <input type="radio" name="hero-slide" id="slide-2">
         <input type="radio" name="hero-slide" id="slide-3">
 
-        <!-- Slides -->
         <div class="hero-slides">
-            <!-- Slide 1: Video Banner -->
             <div class="hero-slide slide-1">
                 <video autoplay muted loop playsinline preload="auto">
                     <source src="https://cdn.shopify.com/videos/c/o/v/1be8954c77fd4ee3a567493d7cfb42f4.mp4" type="video/mp4">
@@ -805,18 +787,15 @@
                 </video>
             </div>
 
-            <!-- Slide 2: Image 1 (shifted up to show eyes) -->
             <div class="hero-slide slide-2">
                 <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2111.16.37.jpg?v=1792567228" alt="HUR Silver Accessories">
             </div>
 
-            <!-- Slide 3: Image 2 -->
             <div class="hero-slide slide-3">
                 <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2111.19.39.jpg?v=1792567228" alt="HUR Silver Accessories">
             </div>
         </div>
 
-        <!-- Carousel Dots Navigation -->
         <div class="carousel-dots">
             <label for="slide-1" title="Video"></label>
             <label for="slide-2" title="Image 1"></label>
@@ -1109,10 +1088,3 @@
 
 </body>
 </html>
-
-
-              <script>
-                              
-              </script>
-                        </body>
-                        </html>
