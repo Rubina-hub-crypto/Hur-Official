@@ -41,7 +41,7 @@
             overflow-x: hidden;
         }
 
-        /* Hidden filter anchors for CSS-only category filtering */
+        /* Hidden filter anchors */
         #filter-all, #filter-rings, #filter-necklaces, #filter-earrings, #filter-bracelets {
             position: absolute;
             opacity: 0;
@@ -300,10 +300,10 @@
         }
 
         /* ============================================
-           SHOP BY CATEGORY — With Filtering
+           SHOP BY CATEGORY — Refined Filtering
            ============================================ */
         .categories {
-            padding: 5rem 3%;
+            padding: 5rem 3% 4rem;
             background: var(--white);
             text-align: center;
         }
@@ -312,59 +312,121 @@
             font-size: 1.75rem;
             font-weight: 600;
             color: var(--dark);
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
             letter-spacing: -0.5px;
         }
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 2rem;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        .category-item {
+
+        .category-filters {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
             gap: 1rem;
+            max-width: 900px;
+            margin: 0 auto 3rem;
+        }
+        .category-filter {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.85rem 1.75rem;
+            background: var(--white);
+            border: 1px solid #e0e0e0;
+            border-radius: 50px;
+            cursor: pointer;
             text-decoration: none;
             color: var(--text);
-            transition: var(--transition);
-            cursor: pointer;
-        }
-        .category-item:hover { transform: translateY(-5px); }
-        .category-icon {
-            width: 100px;
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--cream);
-            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
             transition: var(--transition);
         }
-        .category-item:hover .category-icon { background: var(--gold); }
-        .category-icon svg {
-            width: 50px;
-            height: 50px;
-            stroke: var(--silver-dark);
+        .category-filter:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(184, 147, 90, 0.1);
+        }
+        .category-filter svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
             transition: var(--transition);
         }
-        .category-item:hover .category-icon svg { stroke: var(--white); }
-        .category-item span { font-size: 0.9rem; font-weight: 500; color: var(--text); }
+        .category-filter .count {
+            font-size: 0.7rem;
+            color: var(--silver-dark);
+            font-weight: 400;
+            margin-left: 0.25rem;
+        }
 
-        /* Active category highlight */
-        body:has(#filter-rings:target) .category-item[href="#filter-rings"] .category-icon,
-        body:has(#filter-necklaces:target) .category-item[href="#filter-necklaces"] .category-icon,
-        body:has(#filter-earrings:target) .category-item[href="#filter-earrings"] .category-icon,
-        body:has(#filter-bracelets:target) .category-item[href="#filter-bracelets"] .category-icon {
-            background: var(--gold);
+        /* Active filter states */
+        body:has(#filter-rings:target) .category-filter[href="#filter-rings"],
+        body:has(#filter-necklaces:target) .category-filter[href="#filter-necklaces"],
+        body:has(#filter-earrings:target) .category-filter[href="#filter-earrings"],
+        body:has(#filter-bracelets:target) .category-filter[href="#filter-bracelets"] {
+            background: var(--dark);
+            border-color: var(--dark);
+            color: var(--white);
         }
-        body:has(#filter-rings:target) .category-item[href="#filter-rings"] .category-icon svg,
-        body:has(#filter-necklaces:target) .category-item[href="#filter-necklaces"] .category-icon svg,
-        body:has(#filter-earrings:target) .category-item[href="#filter-earrings"] .category-icon svg,
-        body:has(#filter-bracelets:target) .category-item[href="#filter-bracelets"] .category-icon svg {
-            stroke: var(--white);
+        body:has(#filter-rings:target) .category-filter[href="#filter-rings"] .count,
+        body:has(#filter-necklaces:target) .category-filter[href="#filter-necklaces"] .count,
+        body:has(#filter-earrings:target) .category-filter[href="#filter-earrings"] .count,
+        body:has(#filter-bracelets:target) .category-filter[href="#filter-bracelets"] .count {
+            color: var(--gold-light);
+        }
+
+        /* Active "All" state */
+        body:has(#filter-all:target) .category-filter[href="#filter-all"],
+        body:not(:has(#filter-rings:target, #filter-necklaces:target, #filter-earrings:target, #filter-bracelets:target)) .category-filter[href="#filter-all"] {
+            background: var(--dark);
+            border-color: var(--dark);
+            color: var(--white);
+        }
+
+        /* Filter status bar */
+        .filter-status {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            min-height: 24px;
+        }
+        .filter-status-text {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-weight: 400;
+        }
+        .filter-status-text strong {
+            color: var(--gold);
+            font-weight: 600;
+        }
+        .filter-clear {
+            display: none;
+            margin-left: 0.5rem;
+            padding: 0.35rem 1rem;
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            border-radius: 50px;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        .filter-clear:hover {
+            background: var(--gold);
+            color: var(--white);
+        }
+        body:has(#filter-rings:target) .filter-clear,
+        body:has(#filter-necklaces:target) .filter-clear,
+        body:has(#filter-earrings:target) .filter-clear,
+        body:has(#filter-bracelets:target) .filter-clear {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
         }
 
         /* ============================================
@@ -569,7 +631,7 @@
         }
         .collection-block.dark .collection-desc-armenian { color: rgba(255,255,255,0.6); }
 
-        /* Product grid within collection */
+        /* Product grid */
         .collection-products { max-width: 1400px; margin: 0 auto; }
         .collection-products-header {
             display: flex;
@@ -638,16 +700,14 @@
         }
 
         /* ============================================
-           CATEGORY FILTERING — CSS-only with :has() + :target
+           CATEGORY FILTERING — CSS-only
            ============================================ */
-        /* When a category filter is active, hide non-matching tiles */
+        /* When a filter is active, hide non-matching tiles */
         body:has(#filter-rings:target) .product-tile:not(.ring),
         body:has(#filter-necklaces:target) .product-tile:not(.necklace),
         body:has(#filter-earrings:target) .product-tile:not(.earring),
         body:has(#filter-bracelets:target) .product-tile:not(.bracelet) {
             display: none;
-            opacity: 0;
-            transform: scale(0.95);
         }
 
         /* Show matching tiles with animation */
@@ -655,7 +715,6 @@
         body:has(#filter-necklaces:target) .product-tile.necklace,
         body:has(#filter-earrings:target) .product-tile.earring,
         body:has(#filter-bracelets:target) .product-tile.bracelet {
-            display: block;
             animation: filterIn 0.5s ease;
         }
 
@@ -664,45 +723,22 @@
             to { opacity: 1; transform: scale(1); }
         }
 
-        /* Filter active indicator on category section */
-        body:has(#filter-rings:target) .categories h2::after,
-        body:has(#filter-necklaces:target) .categories h2::after,
-        body:has(#filter-earrings:target) .categories h2::after,
-        body:has(#filter-bracelets:target) .categories h2::after {
-            content: ' — Filtering Active';
-            font-size: 0.9rem;
-            font-weight: 400;
-            color: var(--gold);
-            font-style: italic;
-        }
-
-        /* Show All button appears when filter is active */
-        .filter-clear {
+        /* Hide collection blocks with no visible products when filtered */
+        body:has(#filter-rings:target) .collection-block .products-grid:not(:has(.ring)),
+        body:has(#filter-necklaces:target) .collection-block .products-grid:not(:has(.necklace)),
+        body:has(#filter-earrings:target) .collection-block .products-grid:not(:has(.earring)),
+        body:has(#filter-bracelets:target) .collection-block .products-grid:not(:has(.bracelet)) {
             display: none;
-            margin: 2rem auto 0;
-            padding: 0.75rem 2rem;
-            background: var(--dark);
-            color: var(--white);
-            text-decoration: none;
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            border-radius: 50px;
-            transition: var(--transition);
         }
-        .filter-clear:hover {
-            background: var(--gold);
-            transform: translateY(-2px);
-        }
-        body:has(#filter-rings:target) .filter-clear,
-        body:has(#filter-necklaces:target) .filter-clear,
-        body:has(#filter-earrings:target) .filter-clear,
-        body:has(#filter-bracelets:target) .filter-clear {
-            display: inline-block;
+        body:has(#filter-rings:target) .collection-block:not(:has(.ring)),
+        body:has(#filter-necklaces:target) .collection-block:not(:has(.necklace)),
+        body:has(#filter-earrings:target) .collection-block:not(:has(.earring)),
+        body:has(#filter-bracelets:target) .collection-block:not(:has(.bracelet)) {
+            display: none;
         }
 
         /* ============================================
-           LIGHTBOX — CSS-only with :target
+           LIGHTBOX
            ============================================ */
         .lightbox {
             position: fixed;
@@ -976,7 +1012,6 @@
            RESPONSIVE
            ============================================ */
         @media (max-width: 1024px) {
-            .categories-grid { grid-template-columns: repeat(3, 1fr); }
             .collections-preview { grid-template-columns: repeat(2, 1fr); }
             .products-grid { grid-template-columns: repeat(3, 1fr); }
             .collection-hero { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -1008,9 +1043,8 @@
             .nav-bar-inner { flex-direction: column; padding: 1rem 0; }
             .nav-bar a { padding: 0.85rem 1.5rem; width: 100%; justify-content: center; }
             .hero-slides { height: 60vh; min-height: 400px; }
-            .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-            .category-icon { width: 80px; height: 80px; }
-            .category-icon svg { width: 40px; height: 40px; }
+            .category-filters { gap: 0.75rem; }
+            .category-filter { padding: 0.7rem 1.25rem; font-size: 0.8rem; }
             .collections-preview { grid-template-columns: 1fr 1fr; gap: 1rem; padding: 0 5%; }
             .preview-card-title { font-size: 1.35rem; }
             .products-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
@@ -1024,18 +1058,19 @@
             .lightbox-close { top: 1rem; right: 1rem; }
         }
         @media (max-width: 480px) {
-            .categories-grid { grid-template-columns: repeat(2, 1fr); }
             .collections-preview { grid-template-columns: 1fr; }
             .products-grid { grid-template-columns: repeat(2, 1fr); }
             .top-bar .logo-text { font-size: 1.3rem; }
             .top-bar .logo-svg { width: 34px; height: 34px; }
             .hero-slides { height: 55vh; min-height: 350px; }
+            .category-filter { padding: 0.65rem 1rem; font-size: 0.75rem; }
+            .category-filter svg { width: 16px; height: 16px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Hidden filter anchors for CSS-only category filtering -->
+    <!-- Hidden filter anchors -->
     <div id="filter-all"></div>
     <div id="filter-rings"></div>
     <div id="filter-necklaces"></div>
@@ -1091,7 +1126,7 @@
     </div>
 
     <!-- ============================================
-         NAVIGATION BAR — Updated: HUR + Contact Us
+         NAVIGATION BAR
          ============================================ -->
     <input type="checkbox" id="menu-toggle" class="menu-toggle" hidden>
     <label for="menu-toggle" class="menu-toggle-label" aria-label="Toggle menu"><span></span></label>
@@ -1137,60 +1172,68 @@
     </section>
 
     <!-- ============================================
-         SHOP BY CATEGORY — With Filtering
+         SHOP BY CATEGORY — Refined
          ============================================ -->
     <section class="categories" id="categories">
         <h2>Shop by Category</h2>
-        <div class="categories-grid">
-            <a href="#filter-rings" class="category-item">
-                <div class="category-icon">
-                    <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <circle cx="50" cy="50" r="30"/>
-                        <circle cx="50" cy="50" r="22"/>
-                    </svg>
-                </div>
-                <span>Rings</span>
+
+        <div class="category-filters">
+            <a href="#filter-all" class="category-filter">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7"/>
+                    <rect x="14" y="3" width="7" height="7"/>
+                    <rect x="14" y="14" width="7" height="7"/>
+                    <rect x="3" y="14" width="7" height="7"/>
+                </svg>
+                All
+                <span class="count">17</span>
             </a>
-            <a href="#filter-necklaces" class="category-item">
-                <div class="category-icon">
-                    <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M30 20 Q50 75 70 20"/>
-                        <circle cx="50" cy="70" r="8"/>
-                    </svg>
-                </div>
-                <span>Necklaces</span>
+            <a href="#filter-rings" class="category-filter">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="8"/>
+                    <circle cx="12" cy="12" r="5"/>
+                </svg>
+                Rings
+                <span class="count">15</span>
             </a>
-            <a href="#filter-earrings" class="category-item">
-                <div class="category-icon">
-                    <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <circle cx="35" cy="50" r="14"/>
-                        <circle cx="65" cy="50" r="14"/>
-                        <line x1="35" y1="36" x2="35" y2="25"/>
-                        <line x1="65" y1="36" x2="65" y2="25"/>
-                    </svg>
-                </div>
-                <span>Earrings</span>
+            <a href="#filter-necklaces" class="category-filter">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 4 Q12 18 18 4"/>
+                    <circle cx="12" cy="18" r="2"/>
+                </svg>
+                Necklaces
+                <span class="count">0</span>
             </a>
-            <a href="#filter-bracelets" class="category-item">
-                <div class="category-icon">
-                    <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <ellipse cx="50" cy="50" rx="35" ry="18"/>
-                        <ellipse cx="50" cy="50" rx="28" ry="14"/>
-                    </svg>
-                </div>
-                <span>Bracelets</span>
+            <a href="#filter-earrings" class="category-filter">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="8" cy="12" r="4"/>
+                    <circle cx="16" cy="12" r="4"/>
+                    <line x1="8" y1="8" x2="8" y2="5"/>
+                    <line x1="16" y1="8" x2="16" y2="5"/>
+                </svg>
+                Earrings
+                <span class="count">0</span>
             </a>
-            <a href="#filter-all" class="category-item">
-                <div class="category-icon">
-                    <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <rect x="25" y="30" width="50" height="40" rx="4"/>
-                        <path d="M35 30 L35 22 Q50 15 65 22 L65 30"/>
-                    </svg>
-                </div>
-                <span>Gift Sets</span>
+            <a href="#filter-bracelets" class="category-filter">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <ellipse cx="12" cy="12" rx="9" ry="5"/>
+                    <ellipse cx="12" cy="12" rx="7" ry="4"/>
+                </svg>
+                Bracelets
+                <span class="count">2</span>
             </a>
         </div>
-        <a href="#filter-all" class="filter-clear">Show All Collections</a>
+
+        <div class="filter-status">
+            <span class="filter-status-text">Showing <strong id="visible-count">17</strong> pieces</span>
+            <a href="#filter-all" class="filter-clear">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+                Clear
+            </a>
+        </div>
     </section>
 
     <!-- ============================================
@@ -1273,8 +1316,8 @@
             </div>
             <div class="collection-hero-text">
                 <span class="collection-tag">Collection I</span>
-                <h2 class="collection-title">AREVA<br>ԱՐՎԱ</h2>
-                <p class="collection-subtitle">by HUR ⛓🤍</p>
+                <h2 class="collection-title">AREVA<br>ԱՐԵԱ</h2>
+                <p class="collection-subtitle">by HUR ⛓</p>
                 <p class="collection-desc">A symbol of the sun, rooted in Armenian stone. Reimagined in silver.</p>
                 <p class="collection-desc">Ancient form. Modern silver. ♾️</p>
             </div>
@@ -1341,10 +1384,10 @@
                 <h2 class="collection-title">HALO</h2>
                 <p class="collection-subtitle">by HUR 🤍⛓</p>
                 <p class="collection-desc-armenian">Պարզությունը երբեմն ամենահամարձակ ընտրությունն է։</p>
-                <p class="collection-desc-armenian">HALO-ն մարմնավորում է լույսի, ևի և հավասարակշռության ներդաշնակությունը։</p>
+                <p class="collection-desc-armenian">HALO-ն մարմնավորում է լույսի, ձևի և հավասարակշռության ներդաշնակությունը։</p>
                 <p class="collection-desc-armenian">Յուրաքանչյուր շրջան հիշեցնում է անվերջ շարժման, ամբողջականության և լուռ ուժի մասին։</p>
-                <p class="collection-desc-armenian">Այս գաղաարն է դարձել հավաքածուի հիմքը. շրջանը խորհրդանշում է ներքին լույսը, իսկ արծաթի և սպիտակ քվարցի համադրությունը փոխանցում է այդ մաքրությունն ու պարզությունը։</p>
-                <p class="collection-desc-armenian">Այս հավաքածուն ստեղծված է հիշեցնելու, որ իսկական լույսը միշտ գալիս է ներսից։</p>
+                <p class="collection-desc-armenian">Այս գաղափարն է դարձել հավաքածուի հիմքը. շրջանը խորհրդանշում է ներքին լույսը, իսկ արծաթի և սպիտակ քվարցի համադրությունը փոխանցում է այդ մաքրությունն ու պարզությունը։</p>
+                <p class="collection-desc-armenian">Այս հավաքածուն ստեղծված է հիշեցնելու, որ իսկական ույսը միշտ գալիս է ներսից։</p>
             </div>
         </div>
 
@@ -1393,9 +1436,8 @@
     </section>
 
     <!-- ============================================
-         LIGHTBOXES — CSS-only :target
+         LIGHTBOXES
          ============================================ -->
-    <!-- AREVA Lightboxes -->
     <div id="lb-a1" class="lightbox">
         <div class="lightbox-content">
             <a href="#areva" class="lightbox-close">✕</a>
@@ -1438,7 +1480,7 @@
     </div>
     <div id="lb-a6" class="lightbox">
         <div class="lightbox-content">
-            <a href="#areva" class="lightbox-close"></a>
+            <a href="#areva" class="lightbox-close">✕</a>
             <a href="#lb-a5" class="lightbox-nav lightbox-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></a>
             <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-21_13.49.51.jpg?v=1792576299" alt="AREVA piece">
             <a href="#lb-a7" class="lightbox-nav lightbox-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
@@ -1453,7 +1495,6 @@
         </div>
     </div>
 
-    <!-- RUNE Lightboxes -->
     <div id="lb-r1" class="lightbox">
         <div class="lightbox-content">
             <a href="#rune" class="lightbox-close">✕</a>
@@ -1480,14 +1521,13 @@
     </div>
     <div id="lb-r4" class="lightbox">
         <div class="lightbox-content">
-            <a href="#rune" class="lightbox-close"></a>
+            <a href="#rune" class="lightbox-close">✕</a>
             <a href="#lb-r3" class="lightbox-nav lightbox-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></a>
             <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-21_13.56.11.jpg?v=1792576618" alt="RUNE piece">
             <a href="#lb-r1" class="lightbox-nav lightbox-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
         </div>
     </div>
 
-    <!-- HALO Lightboxes -->
     <div id="lb-h1" class="lightbox">
         <div class="lightbox-content">
             <a href="#halo" class="lightbox-close">✕</a>
@@ -1498,7 +1538,7 @@
     </div>
     <div id="lb-h2" class="lightbox">
         <div class="lightbox-content">
-            <a href="#halo" class="lightbox-close"></a>
+            <a href="#halo" class="lightbox-close">✕</a>
             <a href="#lb-h1" class="lightbox-nav lightbox-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></a>
             <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/2026-10-2114.04.55.jpg?v=1792577242" alt="HALO piece">
             <a href="#lb-h3" class="lightbox-nav lightbox-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
@@ -1521,7 +1561,6 @@
         </div>
     </div>
 
-    <!-- GLOW Lightboxes -->
     <div id="lb-g1" class="lightbox">
         <div class="lightbox-content">
             <a href="#glow" class="lightbox-close">✕</a>
@@ -1680,3 +1719,5 @@
 
 </body>
 </html>
+
+           
