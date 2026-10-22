@@ -43,7 +43,7 @@
         }
 
         /* ============================================
-           RUNNING MARQUEE — Top Announcement Bar
+           RUNNING MARQUEE
            ============================================ */
         .marquee {
             position: fixed;
@@ -59,30 +59,23 @@
             align-items: center;
             border-bottom: 1px solid rgba(184, 147, 90, 0.3);
         }
-
         .marquee-track {
             display: flex;
             width: max-content;
             animation: marqueeScroll 35s linear infinite;
             white-space: nowrap;
         }
-
-        .marquee:hover .marquee-track {
-            animation-play-state: paused;
-        }
-
+        .marquee:hover .marquee-track { animation-play-state: paused; }
         @keyframes marqueeScroll {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
-
         .marquee-content {
             display: flex;
             align-items: center;
             gap: 0;
             padding-right: 2rem;
         }
-
         .marquee-item {
             display: inline-flex;
             align-items: center;
@@ -94,7 +87,6 @@
             text-transform: uppercase;
             color: var(--white);
         }
-
         .marquee-item .brand {
             font-family: var(--font-heading);
             font-weight: 700;
@@ -102,7 +94,6 @@
             letter-spacing: 4px;
             color: var(--gold-light);
         }
-
         .marquee-separator {
             width: 4px;
             height: 4px;
@@ -629,7 +620,7 @@
         }
 
         /* ============================================
-           LIGHTBOX — CSS-only with :target
+           LIGHTBOX
            ============================================ */
         .lightbox {
             position: fixed;
@@ -761,27 +752,358 @@
         }
 
         /* ============================================
-           TESTIMONIAL
+           REVIEWS SECTION — Premium & Dynamic
            ============================================ */
-        .testimonial { padding: 5rem 5%; background: var(--cream); text-align: center; }
-        .testimonial blockquote {
-            font-family: var(--font-heading);
-            font-size: clamp(1.5rem, 3vw, 2.25rem);
-            font-weight: 400;
-            font-style: italic;
-            max-width: 700px;
-            margin: 0 auto 1.5rem;
-            line-height: 1.5;
-            color: var(--dark);
+        .reviews {
+            position: relative;
+            background: var(--darker);
+            color: var(--white);
+            padding: 8rem 5% 6rem;
+            overflow: hidden;
         }
-        .testimonial cite {
-            font-family: var(--font-body);
-            font-size: 0.8rem;
-            letter-spacing: 2px;
+
+        /* Decorative background elements */
+        .reviews::before {
+            content: '"';
+            position: absolute;
+            top: 2rem;
+            left: 5%;
+            font-family: var(--font-heading);
+            font-size: 20rem;
+            color: rgba(184, 147, 90, 0.06);
+            line-height: 1;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .reviews::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(184, 147, 90, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .reviews-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .reviews-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+        .reviews-header .section-label {
+            font-size: 0.7rem;
+            letter-spacing: 4px;
             text-transform: uppercase;
             color: var(--gold);
-            font-style: normal;
+            margin-bottom: 1rem;
             font-weight: 500;
+            display: inline-block;
+        }
+        .reviews-header h2 {
+            font-family: var(--font-heading);
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 500;
+            color: var(--white);
+            letter-spacing: -0.5px;
+            margin-bottom: 1rem;
+        }
+        .reviews-header h2 em {
+            font-style: italic;
+            color: var(--gold-light);
+        }
+        .reviews-header p {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.6);
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Rating summary */
+        .rating-summary {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+        }
+        .rating-big {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+        }
+        .rating-big .number {
+            font-family: var(--font-heading);
+            font-size: 4rem;
+            font-weight: 600;
+            color: var(--white);
+            line-height: 1;
+        }
+        .rating-big .out-of {
+            font-size: 1.25rem;
+            color: rgba(255,255,255,0.4);
+            font-weight: 300;
+        }
+        .rating-stars {
+            display: flex;
+            gap: 0.25rem;
+        }
+        .rating-stars svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--gold);
+            stroke: var(--gold);
+        }
+        .rating-text {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+        .rating-text strong {
+            color: var(--gold-light);
+            font-weight: 500;
+        }
+
+        /* Reviews grid */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .review-card {
+            position: relative;
+            aspect-ratio: 3/4;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--dark);
+        }
+        .review-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+        .review-card img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.8s ease;
+        }
+        .review-card:hover img {
+            transform: scale(1.08);
+        }
+
+        /* Gradient overlay */
+        .review-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to top,
+                rgba(10, 10, 10, 0.95) 0%,
+                rgba(10, 10, 10, 0.7) 30%,
+                rgba(10, 10, 10, 0.3) 60%,
+                rgba(10, 10, 10, 0.1) 100%
+            );
+            z-index: 1;
+            transition: opacity 0.4s ease;
+        }
+        .review-card:hover::before {
+            background: linear-gradient(
+                to top,
+                rgba(10, 10, 10, 0.98) 0%,
+                rgba(10, 10, 10, 0.85) 40%,
+                rgba(10, 10, 10, 0.5) 70%,
+                rgba(10, 10, 10, 0.2) 100%
+            );
+        }
+
+        /* Gold corner accent */
+        .review-card::after {
+            content: '';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 24px;
+            height: 24px;
+            border-top: 1px solid var(--gold);
+            border-right: 1px solid var(--gold);
+            z-index: 2;
+            opacity: 0.6;
+            transition: var(--transition);
+        }
+        .review-card:hover::after {
+            opacity: 1;
+            width: 32px;
+            height: 32px;
+        }
+
+        .review-card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            z-index: 2;
+            color: var(--white);
+        }
+
+        .review-stars {
+            display: flex;
+            gap: 0.15rem;
+            margin-bottom: 0.75rem;
+        }
+        .review-stars svg {
+            width: 14px;
+            height: 14px;
+            fill: var(--gold);
+            stroke: var(--gold);
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+        }
+
+        .review-quote {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            font-weight: 400;
+            font-style: italic;
+            line-height: 1.4;
+            color: var(--white);
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s ease 0.1s;
+        }
+        .review-card:hover .review-quote {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .review-author {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .review-author-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--gradient-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--dark);
+            flex-shrink: 0;
+        }
+        .review-author-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .review-author-name {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--white);
+            letter-spacing: 0.3px;
+        }
+        .review-author-location {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.5);
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .review-collection-tag {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            padding: 0.35rem 0.75rem;
+            background: rgba(184, 147, 90, 0.9);
+            color: var(--dark);
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            border-radius: 50px;
+            z-index: 2;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Animated marquee of review highlights */
+        .reviews-marquee {
+            margin-top: 5rem;
+            padding: 2rem 0;
+            border-top: 1px solid rgba(184, 147, 90, 0.15);
+            border-bottom: 1px solid rgba(184, 147, 90, 0.15);
+            overflow: hidden;
+        }
+        .reviews-marquee-track {
+            display: flex;
+            width: max-content;
+            animation: reviewMarquee 40s linear infinite;
+            gap: 3rem;
+        }
+        .reviews-marquee:hover .reviews-marquee-track {
+            animation-play-state: paused;
+        }
+        @keyframes reviewMarquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .review-highlight {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            white-space: nowrap;
+            padding: 0 1.5rem;
+        }
+        .review-highlight .quote-mark {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--gold);
+            line-height: 1;
+            font-style: italic;
+        }
+        .review-highlight .quote-text {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-style: italic;
+            color: rgba(255,255,255,0.8);
+            font-weight: 400;
+        }
+        .review-highlight .quote-author {
+            font-size: 0.75rem;
+            color: var(--gold-light);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        .review-highlight-divider {
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            flex-shrink: 0;
         }
 
         /* ============================================
@@ -912,6 +1234,7 @@
             .lightbox-prev { left: 0.5rem; }
             .lightbox-next { right: 0.5rem; }
             .footer-content { grid-template-columns: 1fr 1fr; }
+            .reviews-grid { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 768px) {
             .search-bar { display: none; }
@@ -945,6 +1268,11 @@
             .lightbox-prev { left: 0.5rem; top: auto; bottom: 1rem; }
             .lightbox-next { right: 0.5rem; top: auto; bottom: 1rem; }
             .lightbox-close { top: 1rem; right: 1rem; }
+            .reviews-grid { grid-template-columns: 1fr; }
+            .reviews { padding: 5rem 5% 4rem; }
+            .reviews::before { font-size: 12rem; }
+            .rating-summary { gap: 1rem; }
+            .rating-big .number { font-size: 3rem; }
         }
         @media (max-width: 480px) {
             .collections-preview { grid-template-columns: 1fr; }
@@ -960,11 +1288,10 @@
 <body>
 
     <!-- ============================================
-         RUNNING MARQUEE — Top Announcement Bar
+         RUNNING MARQUEE
          ============================================ -->
     <div class="marquee">
         <div class="marquee-track">
-            <!-- First set: HUR at the start only -->
             <div class="marquee-content">
                 <span class="marquee-item"><span class="brand">HUR</span></span>
                 <span class="marquee-separator"></span>
@@ -981,7 +1308,6 @@
                 <span class="marquee-item">Unique Design</span>
                 <span class="marquee-separator"></span>
             </div>
-            <!-- Duplicate set: HUR at the start only (for seamless loop) -->
             <div class="marquee-content">
                 <span class="marquee-item"><span class="brand">HUR</span></span>
                 <span class="marquee-separator"></span>
@@ -1060,7 +1386,7 @@
             <a href="#">HUR <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></a>
             <a href="#about">About Us <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></a>
             <a href="#collections">Collections <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></a>
-            <a href="#testimonial">Reviews</a>
+            <a href="#reviews">Reviews</a>
             <a href="#contact">Contact Us</a>
         </div>
     </nav>
@@ -1274,12 +1600,12 @@
             <div class="collection-hero-text">
                 <span class="collection-tag">Collection IV</span>
                 <h2 class="collection-title">GLOW<br>Cuff</h2>
-                <p class="collection-subtitle">by HUR ️💥</p>
+                <p class="collection-subtitle">by HUR 💥</p>
                 <p class="collection-desc">Our first design featuring a stone.</p>
                 <p class="collection-desc">A subtle glow meets dark, textured silver — creating a contrast of warmth and raw character.</p>
-                <p class="collection-desc">A new expression of HUR. </p>
+                <p class="collection-desc">A new expression of HUR. ⛓</p>
                 <p class="collection-desc-armenian" style="margin-top: 1.5rem;">Առաջին անգամ՝ քար HUR-ի զարդերում։</p>
-                <p class="collection-desc-armenian">Քարի մեղմ փայլն ու մուգ, տեքստուրային արծաթը միավորվում են՝ ստեղծելով հակադրություն, որն ունի իր ուրահատուկ բնավորությունը։</p>
+                <p class="collection-desc-armenian">Քարի մեղմ փայլն ու մուգ, տեքստուրային արծաթը միավորվում են՝ ստեղծելով հակադրություն, որն ունի իր յուրահատուկ բնավորությունը։</p>
             </div>
         </div>
 
@@ -1413,16 +1739,201 @@
         <div class="about-stats">
             <div class="stat"><h3>4</h3><p>Collections</p></div>
             <div class="stat"><h3>100%</h3><p>Sterling Silver</p></div>
-            <div class="stat"><h3>∞</h3><p>Stories</p></div>
+            <div class="stat"><h3></h3><p>Stories</p></div>
         </div>
     </section>
 
     <!-- ============================================
-         TESTIMONIAL
+         REVIEWS SECTION — Premium & Dynamic
          ============================================ -->
-    <section class="testimonial" id="testimonial">
-        <blockquote>"HUR pieces have become my everyday essentials. The quality and design are unmatched — each piece feels like it was made just for me."</blockquote>
-        <cite>— A Loyal Customer</cite>
+    <section class="reviews" id="reviews">
+        <div class="reviews-inner">
+
+            <div class="reviews-header">
+                <span class="section-label">Voices of HUR</span>
+                <h2>Stories from those who <em>wear the mark</em></h2>
+                <p>Every piece carries a story. These are the voices of the people who chose HUR — and made it their own.</p>
+
+                <div class="rating-summary">
+                    <div class="rating-big">
+                        <span class="number">4.9</span>
+                        <span class="out-of">/ 5</span>
+                    </div>
+                    <div class="rating-stars">
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </div>
+                    <div class="rating-text">Based on <strong>5,000+</strong> happy customers</div>
+                </div>
+            </div>
+
+            <div class="reviews-grid">
+
+                <!-- Review 1 -->
+                <div class="review-card">
+                    <span class="review-collection-tag">AREVA</span>
+                    <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/IMG_7815.jpg?v=1792663265" alt="Customer wearing HUR AREVA">
+                    <div class="review-card-content">
+                        <div class="review-stars">
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        </div>
+                        <p class="review-quote">"The AREVA ring feels like it was made for me. Ancient soul, modern hand."</p>
+                        <div class="review-author">
+                            <div class="review-author-avatar">A</div>
+                            <div class="review-author-info">
+                                <div class="review-author-name">Anahit M.</div>
+                                <div class="review-author-location">Yerevan, Armenia</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="review-card">
+                    <span class="review-collection-tag">RUNE</span>
+                    <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/IMG_7816.jpg?v=1792663265" alt="Customer wearing HUR RUNE">
+                    <div class="review-card-content">
+                        <div class="review-stars">
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        </div>
+                        <p class="review-quote">"Raw, bold, unapologetic. RUNE is not jewelry — it's armor."</p>
+                        <div class="review-author">
+                            <div class="review-author-avatar">L</div>
+                            <div class="review-author-info">
+                                <div class="review-author-name">Lilit K.</div>
+                                <div class="review-author-location">Istanbul, Turkey</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="review-card">
+                    <span class="review-collection-tag">HALO</span>
+                    <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/IMG_7817.jpg?v=1792663265" alt="Customer wearing HUR HALO">
+                    <div class="review-card-content">
+                        <div class="review-stars">
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        </div>
+                        <p class="review-quote">"Pure light in silver form. HALO reminds me that beauty is quiet."</p>
+                        <div class="review-author">
+                            <div class="review-author-avatar">S</div>
+                            <div class="review-author-info">
+                                <div class="review-author-name">Sona G.</div>
+                                <div class="review-author-location">Paris, France</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 4 -->
+                <div class="review-card">
+                    <span class="review-collection-tag">GLOW</span>
+                    <img src="https://cdn.shopify.com/s/files/1/0680/7909/1850/files/IMG_7818.jpg?v=1792663265" alt="Customer wearing HUR GLOW">
+                    <div class="review-card-content">
+                        <div class="review-stars">
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        </div>
+                        <p class="review-quote">"The GLOW cuff is my everyday ritual. Warm stone, cool silver — perfect balance."</p>
+                        <div class="review-author">
+                            <div class="review-author-avatar">M</div>
+                            <div class="review-author-info">
+                                <div class="review-author-name">Mari T.</div>
+                                <div class="review-author-location">Dubai, UAE</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Scrolling review highlights -->
+            <div class="reviews-marquee">
+                <div class="reviews-marquee-track">
+                    <div class="review-highlight">
+                        <span class="quote-mark">"</span>
+                        <span class="quote-text">Every piece feels like it was made just for me</span>
+                        <span class="quote-author">— Loyal Customer</span>
+                    </div>
+                    <div class="review-highlight-divider"></div>
+                    <div class="review-highlight">
+                        <span class="quote-mark">"</span>
+                        <span class="quote-text">The quality is unmatched</span>
+                        <span class="quote-author">— Anahit M.</span>
+                    </div>
+                    <div class="review-highlight-divider"></div>
+                    <div class="review-highlight">
+                        <span class="quote-mark">"</span>
+                        <span class="quote-text">Strength doesn't need to be loud</span>
+                        <span class="quote-author">— Lilit K.</span>
+                    </div>
+                    <div class="review-highlight-divider"></div>
+                    <div class="review-highlight">
+                        <span class="quote-mark">"</span>
+                        <span class="quote-text">True light comes from within</span>
+                        <span class="quote-author">— Sona G.</span>
+                    </div>
+                    <div class="review-highlight-divider"></div>
+                    <div class="review-highlight">
+                        <span class="quote-mark">"</span>
+                        <span class="quote-text">A new expression of elegance</span>
+                        <span class="quote-author">— Mari T.</span>
+                    </div>
+                    <div class="review-highlight-divider"></div>
+                    <!-- Duplicate for seamless loop -->
+                    <div class="review-highlight">
+                        <span class="quote-mark">"</span>
+                        <span class="quote-text">Every piece feels like it was made just for me</span>
+                        <span class="quote-author">— Loyal Customer</span>
+                    </div>
+                    <div class="review-highlight-divider"></div>
+                    <div class="review-highlight">
+                        <span class="quote-mark">"</span>
+                        <span class="quote-text">The quality is unmatched</span>
+                        <span class="quote-author">— Anahit M.</span>
+                    </div>
+                    <div class="review-highlight-divider"></div>
+                    <div class="review-highlight">
+                        <span class="quote-mark">"</span>
+                        <span class="quote-text">Strength doesn't need to be loud</span>
+                        <span class="quote-author">— Lilit K.</span>
+                    </div>
+                    <div class="review-highlight-divider"></div>
+                    <div class="review-highlight">
+                        <span class="quote-mark">"</span>
+                        <span class="quote-text">True light comes from within</span>
+                        <span class="quote-author">— Sona G.</span>
+                    </div>
+                    <div class="review-highlight-divider"></div>
+                    <div class="review-highlight">
+                        <span class="quote-mark">"</span>
+                        <span class="quote-text">A new expression of elegance</span>
+                        <span class="quote-author">— Mari T.</span>
+                    </div>
+                    <div class="review-highlight-divider"></div>
+                </div>
+            </div>
+
+        </div>
     </section>
 
     <!-- ============================================
@@ -1523,7 +2034,7 @@
                 <h4>Company</h4>
                 <ul>
                     <li><a href="#about">About Us</a></li>
-                    <li><a href="#testimonial">Reviews</a></li>
+                    <li><a href="#reviews">Reviews</a></li>
                     <li><a href="#contact">Contact Us</a></li>
                 </ul>
             </div>
@@ -1544,3 +2055,4 @@
 
 </body>
 </html>
+
